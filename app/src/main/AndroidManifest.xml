@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xgr.wonderful">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+    <!--<uses-sdk-->
+    <!--android:minSdkVersion="14"-->
+    <!--android:targetSdkVersion="21" />-->
 
     <!-- bmob permission -->
     <uses-permission android:name="android.permission.INTERNET" />
