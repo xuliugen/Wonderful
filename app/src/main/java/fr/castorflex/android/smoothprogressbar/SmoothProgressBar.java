@@ -81,7 +81,7 @@ public class SmoothProgressBar extends ProgressBar {
                 .mirrorMode(mirrorMode);
 
         if (strSpeed != null) builder.speed(Float.parseFloat(strSpeed));
-        if(colors != null && colors.length > 0)
+        if (colors != null && colors.length > 0)
             builder.colors(colors);
         else
             builder.color(color);

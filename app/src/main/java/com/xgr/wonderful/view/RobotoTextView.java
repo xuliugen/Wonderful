@@ -13,28 +13,28 @@ import android.widget.TextView;
  * TODO
  */
 
-public class RobotoTextView extends TextView{
+public class RobotoTextView extends TextView {
 
-	public RobotoTextView(Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub\
-		style(context);
-	}
+    public RobotoTextView(Context context) {
+        super(context);
+        // TODO Auto-generated constructor stub\
+        style(context);
+    }
 
-	public RobotoTextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		// TODO Auto-generated constructor stub
-		style(context);
-	}
-	
-	public RobotoTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		// TODO Auto-generated constructor stub
-		style(context);
-	}
+    public RobotoTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        // TODO Auto-generated constructor stub
+        style(context);
+    }
 
-	private void style(Context context){
-		Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-regular.ttf");
-		setTypeface(typeface);
-	}
+    public RobotoTextView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        // TODO Auto-generated constructor stub
+        style(context);
+    }
+
+    private void style(Context context) {
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-regular.ttf");
+        setTypeface(typeface);
+    }
 }

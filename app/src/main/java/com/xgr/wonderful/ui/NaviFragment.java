@@ -1,7 +1,7 @@
 package com.xgr.wonderful.ui;
 
-
 import net.youmi.android.offers.OffersManager;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,16 +19,12 @@ import cn.bmob.v3.BmobUser;
 
 import com.xgr.wonderful.R;
 
-
-
 /**
  * 导航栏
- * 
+ *
  * @author yl
- * 
  */
-public class NaviFragment extends Fragment implements OnClickListener
-         {
+public class NaviFragment extends Fragment implements OnClickListener {
 
     private static final int HOMEFRAGMENT = 0;
     private static final int SETTINGSFRAGMENT = 1;
@@ -63,7 +59,7 @@ public class NaviFragment extends Fragment implements OnClickListener
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_navi, null);
@@ -114,142 +110,141 @@ public class NaviFragment extends Fragment implements OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-        case R.id.tv_navi_main:
+            case R.id.tv_navi_main:
 
-            navi_home.setSelected(true);// 菜单设置为被选中状态，其余设置为非选中状态
-            navi_feedback.setSelected(false);
-            navi_settings.setSelected(false);
-            navi_intro.setSelected(false);
-            navi_about.setSelected(false);
-            
-            OnTabSelected(HOMEFRAGMENT);
-            break;
-        case R.id.tv_navi_feedback:
+                navi_home.setSelected(true);// 菜单设置为被选中状态，其余设置为非选中状态
+                navi_feedback.setSelected(false);
+                navi_settings.setSelected(false);
+                navi_intro.setSelected(false);
+                navi_about.setSelected(false);
 
-            navi_home.setSelected(false);
-            navi_feedback.setSelected(true);
-            navi_settings.setSelected(false);
-            navi_intro.setSelected(false);
-            navi_about.setSelected(false);
+                OnTabSelected(HOMEFRAGMENT);
+                break;
+            case R.id.tv_navi_feedback:
 
-            OnTabSelected(FEEDBACKFRAGMENT);
-            break;
-        case R.id.tv_navi_settings:// 
+                navi_home.setSelected(false);
+                navi_feedback.setSelected(true);
+                navi_settings.setSelected(false);
+                navi_intro.setSelected(false);
+                navi_about.setSelected(false);
 
-            navi_home.setSelected(false);
-            navi_feedback.setSelected(false);
-            navi_settings.setSelected(true);
-            navi_intro.setSelected(false);
-            navi_about.setSelected(false);
+                OnTabSelected(FEEDBACKFRAGMENT);
+                break;
+            case R.id.tv_navi_settings://
 
-            OnTabSelected(SETTINGSFRAGMENT);
-            break;
-        case R.id.tv_navi_intro:
+                navi_home.setSelected(false);
+                navi_feedback.setSelected(false);
+                navi_settings.setSelected(true);
+                navi_intro.setSelected(false);
+                navi_about.setSelected(false);
 
-            navi_home.setSelected(false);
-            navi_feedback.setSelected(false);
-            navi_settings.setSelected(false);
-            navi_intro.setSelected(true);
-            navi_about.setSelected(false);
+                OnTabSelected(SETTINGSFRAGMENT);
+                break;
+            case R.id.tv_navi_intro:
 
-            OnTabSelected(INTROFRAGMENT);
-            break;
-        case R.id.tv_navi_about:
-        	 navi_home.setSelected(false);
-             navi_feedback.setSelected(false);
-             navi_settings.setSelected(false);
-             navi_intro.setSelected(false);
-             navi_about.setSelected(true);
-             
-             OnTabSelected(ABOUTFRAGMENT);
-        	break;
+                navi_home.setSelected(false);
+                navi_feedback.setSelected(false);
+                navi_settings.setSelected(false);
+                navi_intro.setSelected(true);
+                navi_about.setSelected(false);
+
+                OnTabSelected(INTROFRAGMENT);
+                break;
+            case R.id.tv_navi_about:
+                navi_home.setSelected(false);
+                navi_feedback.setSelected(false);
+                navi_settings.setSelected(false);
+                navi_intro.setSelected(false);
+                navi_about.setSelected(true);
+
+                OnTabSelected(ABOUTFRAGMENT);
+                break;
         }
         mActivity.getSlidingMenu().toggle();
     }
-    
+
     //选中导航中对应的tab选项
     private void OnTabSelected(int index) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        
-        switch (index) {
-        case HOMEFRAGMENT:
-        	hideFragments(transaction);
-          if (null == mMainFMainfragment) {
-              mMainFMainfragment = new Mainfragment();
-              transaction.add(R.id.center, mMainFMainfragment);
-          } else {
-              transaction.show(mMainFMainfragment);
-          }
-            break;
-        case SETTINGSFRAGMENT: 
 
-        	hideFragments(transaction);
-        	if (null == mSettingsfragment) {
-        		mSettingsfragment = new SettingsFragment();
-                transaction.add(R.id.center, mSettingsfragment);
-            } else {
-                transaction.show(mSettingsfragment);
-            }
-            break;
-        case FEEDBACKFRAGMENT:
+        switch (index) {
+            case HOMEFRAGMENT:
+                hideFragments(transaction);
+                if (null == mMainFMainfragment) {
+                    mMainFMainfragment = new Mainfragment();
+                    transaction.add(R.id.center, mMainFMainfragment);
+                } else {
+                    transaction.show(mMainFMainfragment);
+                }
+                break;
+            case SETTINGSFRAGMENT:
+
+                hideFragments(transaction);
+                if (null == mSettingsfragment) {
+                    mSettingsfragment = new SettingsFragment();
+                    transaction.add(R.id.center, mSettingsfragment);
+                } else {
+                    transaction.show(mSettingsfragment);
+                }
+                break;
+            case FEEDBACKFRAGMENT:
 
 //        	FeedbackAgent agent = new FeedbackAgent(mActivity);
 //			agent.startFeedbackActivity();
-        	BmobUser currentUser = BmobUser.getCurrentUser(mActivity);
-			if (currentUser != null) {
-				// 允许用户使用应用,即有了用户的唯一标识符，可以作为发布内容的字段
-				hideFragments(transaction);
-	        	if(null == mFavFragment){
-	        		mFavFragment = new FavFragment();
-	        		transaction.add(R.id.center, mFavFragment);
-	        	}else{
-	        		transaction.show(mFavFragment);
-	        	}
-			} else {
-				// 缓存用户对象为空时， 可打开用户注册界面…
-				Toast.makeText(mActivity, "请先登录。",
-						Toast.LENGTH_SHORT).show();
-				Intent intent = new Intent();
-				intent.setClass(mActivity, RegisterAndLoginActivity.class);
-				startActivity(intent);
-			}
-            break;
-        case INTROFRAGMENT:
+                BmobUser currentUser = BmobUser.getCurrentUser(mActivity);
+                if (currentUser != null) {
+                    // 允许用户使用应用,即有了用户的唯一标识符，可以作为发布内容的字段
+                    hideFragments(transaction);
+                    if (null == mFavFragment) {
+                        mFavFragment = new FavFragment();
+                        transaction.add(R.id.center, mFavFragment);
+                    } else {
+                        transaction.show(mFavFragment);
+                    }
+                } else {
+                    // 缓存用户对象为空时， 可打开用户注册界面…
+                    Toast.makeText(mActivity, "请先登录。",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setClass(mActivity, RegisterAndLoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            case INTROFRAGMENT:
 
-        	OffersManager.getInstance(mActivity).showOffersWall();
-            break;
-        case ABOUTFRAGMENT:
-        	hideFragments(transaction);
-        	if(null == mAboutFragment){
-        		mAboutFragment = new AboutFragment();
-        		transaction.add(R.id.center, mAboutFragment);
-        	}else{
-        		transaction.show(mAboutFragment);
-        	}
-        	break;
+                OffersManager.getInstance(mActivity).showOffersWall();
+                break;
+            case ABOUTFRAGMENT:
+                hideFragments(transaction);
+                if (null == mAboutFragment) {
+                    mAboutFragment = new AboutFragment();
+                    transaction.add(R.id.center, mAboutFragment);
+                } else {
+                    transaction.show(mAboutFragment);
+                }
+                break;
         }
         transaction.commit();
     }
 
     /**
      * 将所有fragment都置为隐藏状态
-     * 
-     * @param transaction
-     *            用于对Fragment执行操作的事务
+     *
+     * @param transaction 用于对Fragment执行操作的事务
      */
     private void hideFragments(FragmentTransaction transaction) {
-    	if(mMainFMainfragment!=null){
-    		transaction.hide(mMainFMainfragment);
-    	}
-    	if(mSettingsfragment!=null){
-    		transaction.hide(mSettingsfragment);
-    	}
-    	if(mAboutFragment!=null){
-    		transaction.hide(mAboutFragment);
-    	}
-    	if(mFavFragment!=null){
-    		transaction.hide(mFavFragment);
-    	}
+        if (mMainFMainfragment != null) {
+            transaction.hide(mMainFMainfragment);
+        }
+        if (mSettingsfragment != null) {
+            transaction.hide(mSettingsfragment);
+        }
+        if (mAboutFragment != null) {
+            transaction.hide(mAboutFragment);
+        }
+        if (mFavFragment != null) {
+            transaction.hide(mFavFragment);
+        }
     }
 
 }

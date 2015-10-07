@@ -22,22 +22,23 @@ public class TencentShareEntity {
      */
     public TencentShareEntity() {
         this(TencentShareConstants.TITLE, TencentShareConstants.IMG_URL, TencentShareConstants.TARGET_URL,
-            TencentShareConstants.SUMMARY, TencentShareConstants.COMMENT);
+                TencentShareConstants.SUMMARY, TencentShareConstants.COMMENT);
     }
 
     /**
      * 设置动态分享参数
+     *
      * @param title
      * @param imgUrl
      * @param targetUrl
      * @param summary
      */
     public TencentShareEntity(String title, String imgUrl, String targetUrl, String summary, String comment) {
-        this.title=title;
-        this.imgUrl=imgUrl;
-        this.targetUrl=targetUrl;
-        this.summary=summary;
-        this.comment=comment;
+        this.title = title;
+        this.imgUrl = imgUrl;
+        this.targetUrl = targetUrl;
+        this.summary = summary;
+        this.comment = comment;
     }
 
     public String getTitle() {
@@ -45,7 +46,7 @@ public class TencentShareEntity {
     }
 
     public void setTitle(String title) {
-        this.title=title;
+        this.title = title;
     }
 
     public String getImgUrl() {
@@ -53,7 +54,7 @@ public class TencentShareEntity {
     }
 
     public void setImgUrl(String imgUrl) {
-        this.imgUrl=imgUrl;
+        this.imgUrl = imgUrl;
     }
 
     public String getTargetUrl() {
@@ -61,7 +62,7 @@ public class TencentShareEntity {
     }
 
     public void setTargetUrl(String targetUrl) {
-        this.targetUrl=targetUrl;
+        this.targetUrl = targetUrl;
     }
 
     public String getSummary() {
@@ -69,7 +70,7 @@ public class TencentShareEntity {
     }
 
     public void setSummary(String summary) {
-        this.summary=summary;
+        this.summary = summary;
     }
 
     public String getComment() {
@@ -77,13 +78,13 @@ public class TencentShareEntity {
     }
 
     public void setComment(String comment) {
-        this.comment=comment;
+        this.comment = comment;
     }
 
     @Override
     public String toString() {
         return "TencentShareEntity [title=" + title + ", imgUrl=" + imgUrl + ", targetUrl=" + targetUrl + ", summary=" + summary
-            + ", comment=" + comment + "]";
+                + ", comment=" + comment + "]";
     }
 
 }

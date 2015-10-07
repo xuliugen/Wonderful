@@ -24,7 +24,6 @@ import com.xgr.wonderful.utils.NetworkUtil;
 import com.xgr.wonderful.utils.Sputil;
 
 
-
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -35,15 +34,15 @@ import android.util.Log;
 /**
  * @author kingofglory email: kingofglory@yeah.net blog: http:www.google.com
  * @date 2014-3-3 TODO 实现QQ好友以及Qzone分享一键完成 usage:1.按opensdk说明文档配置好AndroidManifest.xml 2.在@see{TencentShareConstants}中填写相应分享内容
- *       ,当调用无参数分享方法时，刚采用该接口中默认填写内容，当调用有参数分享时，刚采用传入参数 3.调用示例： TencentShare ts = new TencentShare(Activity,TencentShareEntity);
- *       第二个参数若为空，刚采用第二步中填写默认参数 ts.shareToQQ();//无参数分享到QQ好友 ts.shareToQZone();//分享到QQ空间
+ * ,当调用无参数分享方法时，刚采用该接口中默认填写内容，当调用有参数分享时，刚采用传入参数 3.调用示例： TencentShare ts = new TencentShare(Activity,TencentShareEntity);
+ * 第二个参数若为空，刚采用第二步中填写默认参数 ts.shareToQQ();//无参数分享到QQ好友 ts.shareToQZone();//分享到QQ空间
  */
 
 public class TencentShare implements TencentShareConstants {
 
-    public static final String TAG="TencentShare";
+    public static final String TAG = "TencentShare";
 
-    public static final String SCOPE="get_simple_userinfo";
+    public static final String SCOPE = "get_simple_userinfo";
 
     private Activity mContext;
 
@@ -54,39 +53,40 @@ public class TencentShare implements TencentShareConstants {
     private Sputil sputil;
 
     public TencentShare(Activity context, TencentShareEntity entity) {
-        mContext=context;
+        mContext = context;
         initTencent();
-        shareEntity=entity;
-        if(shareEntity == null) {
-            shareEntity=
-                new TencentShareEntity(TencentShareConstants.TITLE, TencentShareConstants.IMG_URL,
-                    TencentShareConstants.TARGET_URL, TencentShareConstants.SUMMARY, TencentShareConstants.COMMENT);
+        shareEntity = entity;
+        if (shareEntity == null) {
+            shareEntity =
+                    new TencentShareEntity(TencentShareConstants.TITLE, TencentShareConstants.IMG_URL,
+                            TencentShareConstants.TARGET_URL, TencentShareConstants.SUMMARY, TencentShareConstants.COMMENT);
         }
-        sputil=new Sputil(mContext, Constant.PRE_NAME);
+        sputil = new Sputil(mContext, Constant.PRE_NAME);
     }
 
     /**
      * 初始化tencent实例
      */
     private void initTencent() {
-        if(tencent == null) {
-            tencent=Tencent.createInstance(getAppId(), mContext);
+        if (tencent == null) {
+            tencent = Tencent.createInstance(getAppId(), mContext);
         }
 
     }
 
     /**
      * 从Adminifest.xml里读取app_id
+     *
      * @return
      */
     private String getAppId() {
-        String appId="";
+        String appId = "";
         try {
-            ApplicationInfo appInfo=
-                mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(), PackageManager.GET_META_DATA);
-            appId=appInfo.metaData.getString("TA_APPKEY");
+            ApplicationInfo appInfo =
+                    mContext.getPackageManager().getApplicationInfo(mContext.getPackageName(), PackageManager.GET_META_DATA);
+            appId = appInfo.metaData.getString("TA_APPKEY");
             // LogUtil.i(TAG,appId.substring(3));
-        } catch(NameNotFoundException e) {
+        } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
         return appId.substring(3);
@@ -103,7 +103,7 @@ public class TencentShare implements TencentShareConstants {
      * 检查网络并开始分享,支持动态改变分享参数
      */
     private void shareToQQ(TencentShareEntity entity) {
-        if(NetworkUtil.isAvailable(mContext)) {
+        if (NetworkUtil.isAvailable(mContext)) {
             doShareToQQ(entity);
         } else {
             ActivityUtil.show(mContext, "网络无连接");
@@ -112,6 +112,7 @@ public class TencentShare implements TencentShareConstants {
 
     /**
      * QQ分享实际操作
+     *
      * @param title
      * @param imgUrl
      * @param targetUrl
@@ -119,7 +120,7 @@ public class TencentShare implements TencentShareConstants {
      */
     private void doShareToQQ(TencentShareEntity entity) {
         System.out.println(entity);
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
         params.putString(SocialConstants.PARAM_TITLE, entity.getTitle());
         params.putString(SocialConstants.PARAM_IMAGE_URL, entity.getImgUrl());
         params.putString(SocialConstants.PARAM_TARGET_URL, entity.getTargetUrl());
@@ -141,7 +142,7 @@ public class TencentShare implements TencentShareConstants {
      * 检查网络状态并开始Qzone分享，支持动态改变分享参数
      */
     private void shareToQZone(TencentShareEntity entity) {
-        if(NetworkUtil.isAvailable(mContext)) {
+        if (NetworkUtil.isAvailable(mContext)) {
             doShareToQZone(entity);
         } else {
             ActivityUtil.show(mContext, "网络无连接");
@@ -152,7 +153,7 @@ public class TencentShare implements TencentShareConstants {
      * 分享到QQ空间，实际分享操作
      */
     private void doShareToQZone(TencentShareEntity entity) {
-        if(ready()) {
+        if (ready()) {
             // send story
             sendStoryToQZone(entity);
         } else {
@@ -182,10 +183,11 @@ public class TencentShare implements TencentShareConstants {
 
     /**
      * 是否绑定QQ
+     *
      * @return
      */
     public boolean isBindQQ() {
-        if(!sputil.getValue("nick", "").equals("")) {
+        if (!sputil.getValue("nick", "").equals("")) {
             return true;
         }
         return false;
@@ -193,10 +195,11 @@ public class TencentShare implements TencentShareConstants {
 
     /**
      * 检验QQ是否在登录状态
+     *
      * @return
      */
     private boolean ready() {
-        boolean ready=tencent.isSessionValid() && tencent.getOpenId() != null;
+        boolean ready = tencent.isSessionValid() && tencent.getOpenId() != null;
         return ready;
     }
 
@@ -204,7 +207,7 @@ public class TencentShare implements TencentShareConstants {
      * 进入QZone分享，实际分享操作
      */
     private void sendStoryToQZone(TencentShareEntity entity) {
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
 
         params.putString(SocialConstants.PARAM_TITLE, entity.getTitle());
         params.putString(SocialConstants.PARAM_IMAGE, entity.getImgUrl());
@@ -217,10 +220,10 @@ public class TencentShare implements TencentShareConstants {
 
     private class BaseUiListener implements IUiListener {
 
-        private int flag=-1;
+        private int flag = -1;
 
         public BaseUiListener(int flag) {
-            this.flag=flag;
+            this.flag = flag;
         }
 
         @Override
@@ -237,7 +240,7 @@ public class TencentShare implements TencentShareConstants {
         @Override
         public void onComplete(Object arg0) {
             // TODO Auto-generated method stub
-            switch(flag) {
+            switch (flag) {
                 case 0:
                     LogUtils.i(TAG, "share to qq complete!");
                     onShareToQQComplete();
@@ -264,10 +267,10 @@ public class TencentShare implements TencentShareConstants {
      * 登錄完QQ以后想做的操作，比如獲取QQ信息等
      */
     public void onQQLoginComplete() {
-        if(ready()) {
-            BaseApiListener requestListener=new BaseApiListener("get_simple_userinfo", false);
-            Bundle params=new Bundle();
-            if(tencent != null && tencent.isSessionValid()) {
+        if (ready()) {
+            BaseApiListener requestListener = new BaseApiListener("get_simple_userinfo", false);
+            Bundle params = new Bundle();
+            if (tencent != null && tencent.isSessionValid()) {
                 params.putString(Constants.PARAM_ACCESS_TOKEN, tencent.getAccessToken());
                 params.putString(Constants.PARAM_CONSUMER_KEY, tencent.getAppId());
                 params.putString(Constants.PARAM_OPEN_ID, tencent.getOpenId());
@@ -293,13 +296,13 @@ public class TencentShare implements TencentShareConstants {
 
     private class BaseApiListener implements IRequestListener {
 
-        private String mScope="all";
+        private String mScope = "all";
 
-        private Boolean mNeedReAuth=false;
+        private Boolean mNeedReAuth = false;
 
         public BaseApiListener(String scope, boolean needReAuth) {
-            mScope=scope;
-            mNeedReAuth=needReAuth;
+            mScope = scope;
+            mNeedReAuth = needReAuth;
         }
 
         @Override
@@ -311,10 +314,10 @@ public class TencentShare implements TencentShareConstants {
 
         protected void doComplete(JSONObject response) {
             try {
-                int ret=response.getInt("ret");
-                if(ret == 100030) {
-                    if(mNeedReAuth) {
-                        Runnable r=new Runnable() {
+                int ret = response.getInt("ret");
+                if (ret == 100030) {
+                    if (mNeedReAuth) {
+                        Runnable r = new Runnable() {
 
                             public void run() {
                                 tencent.reAuth(mContext, mScope, new BaseUiListener(-1));
@@ -322,11 +325,11 @@ public class TencentShare implements TencentShareConstants {
                         };
                         mContext.runOnUiThread(r);
                     }
-                } else if(ret == 0) {
-                    String nick=response.getString("nickname");
+                } else if (ret == 0) {
+                    String nick = response.getString("nickname");
                     sputil.setValue("nick", nick);
                 }
-            } catch(JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
                 Log.e("toddtest", response.toString());
             }
@@ -340,44 +343,43 @@ public class TencentShare implements TencentShareConstants {
 
         @Override
         public void onMalformedURLException(final MalformedURLException e) {
-        	LogUtils.i("IRequestListener.onMalformedURLException", e.toString());
+            LogUtils.i("IRequestListener.onMalformedURLException", e.toString());
         }
 
         @Override
         public void onJSONException(final JSONException e) {
-        	LogUtils.i("IRequestListener.onJSONException:", e.getMessage());
+            LogUtils.i("IRequestListener.onJSONException:", e.getMessage());
         }
 
         @Override
         public void onConnectTimeoutException(ConnectTimeoutException arg0) {
-        	LogUtils.i("IRequestListener.onConnectTimeoutException:", arg0.getMessage());
+            LogUtils.i("IRequestListener.onConnectTimeoutException:", arg0.getMessage());
 
         }
 
         @Override
         public void onSocketTimeoutException(SocketTimeoutException arg0) {
-        	LogUtils.i("IRequestListener.SocketTimeoutException:", arg0.getMessage());
+            LogUtils.i("IRequestListener.SocketTimeoutException:", arg0.getMessage());
         }
 
         @Override
         public void onUnknowException(Exception arg0) {
-        	LogUtils.i("IRequestListener.onUnknowException:", arg0.getMessage());
+            LogUtils.i("IRequestListener.onUnknowException:", arg0.getMessage());
         }
 
-		@Override
-		public void onHttpStatusException(HttpStatusException arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+        @Override
+        public void onHttpStatusException(HttpStatusException arg0) {
+            // TODO Auto-generated method stub
 
-		@Override
-		public void onNetworkUnavailableException(
-				NetworkUnavailableException arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+        }
 
-       
+        @Override
+        public void onNetworkUnavailableException(
+                NetworkUnavailableException arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
 
     }
 

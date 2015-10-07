@@ -19,32 +19,33 @@ import android.support.v4.app.Fragment;
  * TODO
  */
 
-public abstract class BaseFragment extends Fragment{
-	public static String TAG;
-	protected Context mContext;
-	protected Sputil sputil;
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		TAG = this.getClass().getSimpleName();
-		mContext = getActivity();
-		if(null == sputil){
-			sputil = new Sputil(mContext, Constant.PRE_NAME);
-		}
-	}
-	
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		MobclickAgent.onPageStart(TAG);
-	}
+public abstract class BaseFragment extends Fragment {
+    public static String TAG;
+    protected Context mContext;
+    protected Sputil sputil;
 
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		MobclickAgent.onPageEnd(TAG);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        TAG = this.getClass().getSimpleName();
+        mContext = getActivity();
+        if (null == sputil) {
+            sputil = new Sputil(mContext, Constant.PRE_NAME);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        MobclickAgent.onPageStart(TAG);
+    }
+
+    @Override
+    public void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+    }
 }

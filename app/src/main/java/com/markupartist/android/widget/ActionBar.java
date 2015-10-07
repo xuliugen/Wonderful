@@ -37,8 +37,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-
 public class ActionBar extends RelativeLayout implements OnClickListener {
 
     private LayoutInflater mInflater;
@@ -67,7 +65,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
         mTitleView = (TextView) mBarView.findViewById(R.id.actionbar_title);
         mActionsView = (LinearLayout) mBarView.findViewById(R.id.actionbar_actions);
-        
+
         mProgress = (ProgressBar) mBarView.findViewById(R.id.actionbar_progress);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
@@ -94,10 +92,10 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Shows the provided logo to the left in the action bar.
-     * 
+     * <p/>
      * This is ment to be used instead of the setHomeAction and does not draw
      * a divider to the left of the provided logo.
-     * 
+     *
      * @param resId The drawable resource id
      */
     public void setHomeLogo(int resId) {
@@ -111,13 +109,13 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
      * and toggles whether the "home" view should have a little triangle
      * indicating "up" */
     public void setDisplayHomeAsUpEnabled(boolean show) {
-        mBackIndicator.setVisibility(show? View.VISIBLE : View.GONE);
+        mBackIndicator.setVisibility(show ? View.VISIBLE : View.GONE);
 //        mBackIndicator.setBackgroundResource(R.drawable.actionbar_back_indicator);
-        mBackIndicator.setImageResource(show?R.drawable.back_indicator:android.R.color.transparent);
+        mBackIndicator.setImageResource(show ? R.drawable.back_indicator : android.R.color.transparent);
     }
 
     @SuppressWarnings("deprecation")
-	public void setNavigationDrawerImage(Drawable drawable) {
+    public void setNavigationDrawerImage(Drawable drawable) {
         mBackIndicator.setVisibility(View.VISIBLE);
         mBackIndicator.setBackgroundDrawable(drawable);
     }
@@ -132,9 +130,9 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Set the enabled state of the progress bar.
-     * 
+     *
      * @param One of {@link View#VISIBLE}, {@link View#INVISIBLE},
-     *   or {@link View#GONE}.
+     *            or {@link View#GONE}.
      */
     public void setProgressBarVisibility(int visibility) {
         mProgress.setVisibility(visibility);
@@ -142,9 +140,9 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Returns the visibility status for the progress bar.
-     * 
+     *
      * @param One of {@link View#VISIBLE}, {@link View#INVISIBLE},
-     *   or {@link View#GONE}.
+     *            or {@link View#GONE}.
      */
     public int getProgressBarVisibility() {
         return mProgress.getVisibility();
@@ -152,7 +150,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Function to set a click listener for Title TextView
-     * 
+     *
      * @param listener the onClickListener
      */
     public void setOnTitleClickListener(OnClickListener listener) {
@@ -170,6 +168,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Adds a list of {@link Action}s.
+     *
      * @param actionList the actions to add
      */
     public void addActions(ActionList actionList) {
@@ -181,6 +180,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Adds a new {@link Action}.
+     *
      * @param action the action to add
      */
     public void addAction(Action action) {
@@ -190,8 +190,9 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Adds a new {@link Action} at the specified index.
+     *
      * @param action the action to add
-     * @param index the position at which to add the action
+     * @param index  the position at which to add the action
      */
     public void addAction(Action action, int index) {
         mActionsView.addView(inflateAction(action), index);
@@ -206,6 +207,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param index position of action to remove
      */
     public void removeActionAt(int index) {
@@ -214,6 +216,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Remove a action from the action bar.
+     *
      * @param action The action to remove
      */
     public void removeAction(Action action) {
@@ -231,6 +234,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Returns the number of actions currently registered with the action bar.
+     *
      * @return action count
      */
     public int getActionCount() {
@@ -239,6 +243,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     /**
      * Inflates a {@link View} with the given {@link Action}.
+     *
      * @param action the action to inflate
      * @return a view
      */
@@ -246,7 +251,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
         View view = mInflater.inflate(R.layout.actionbar_item, mActionsView, false);
 
         ImageButton labelView =
-            (ImageButton) view.findViewById(R.id.actionbar_item);
+                (ImageButton) view.findViewById(R.id.actionbar_item);
         labelView.setImageResource(action.getDrawable());
 
         view.setTag(action);
@@ -258,7 +263,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
      * A {@link LinkedList} that holds a list of {@link Action}s.
      */
     @SuppressWarnings("serial")
-	public static class ActionList extends LinkedList<Action> {
+    public static class ActionList extends LinkedList<Action> {
     }
 
     /**
@@ -267,6 +272,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
      */
     public interface Action {
         public int getDrawable();
+
         public void performAction(View view);
     }
 
@@ -296,7 +302,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
         @Override
         public void performAction(View view) {
             try {
-               mContext.startActivity(mIntent); 
+                mContext.startActivity(mIntent);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(mContext,
                         mContext.getText(R.string.actionbar_activity_not_found),
